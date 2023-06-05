@@ -23,7 +23,7 @@ func SetupRouter() *gin.Engine {
 		ctx.HTML(200, "stoplight.html", gin.H{})
 	})
 
-	docs.SwaggerInfo.Title = "Konut Konfor Api"
+	docs.SwaggerInfo.Title = "Go Ldap Rest API"
 	docs.SwaggerInfo.Host = "localhost:8088"
 	docs.SwaggerInfo.Version = "v1"
 	docs.SwaggerInfo.BasePath = "/api/v1"
