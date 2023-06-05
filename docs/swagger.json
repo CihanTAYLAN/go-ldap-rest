@@ -1,0 +1,52 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/admin/users": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Get Users"
+                ],
+                "summary": "Get Users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": ""
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ctrl_admin.FooBarResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ctrl_admin.FooBarResponse": {
+            "type": "object",
+            "properties": {
+                "bar": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "foo": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

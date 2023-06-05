@@ -1,0 +1,32 @@
+definitions:
+  ctrl_admin.FooBarResponse:
+    properties:
+      bar:
+        items:
+          type: integer
+        type: array
+      foo:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /admin/users:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: ""
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ctrl_admin.FooBarResponse'
+      summary: Get Users
+      tags:
+      - Get Users
+swagger: "2.0"
