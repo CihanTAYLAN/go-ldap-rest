@@ -13,7 +13,7 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {{ status:200,message:'OK',data:users:[] }}} Get Users
-// @Failure 500 {object} FooBarResponse
+// //@Failure 500 {object} FooBarResponse
 // @Router /admin/users [get]
 func Find(c *gin.Context) {
 

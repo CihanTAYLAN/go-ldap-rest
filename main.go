@@ -1,12 +1,9 @@
 package main
 
 import (
-	"ldap-rest/app/router"
+	"ldap-rest/app"
 )
 
 func main() {
-	r := router.SetupRouter()
-
-	r.Run()
-	// r.Run(":8088")
+	app.Bootstrap()
 }

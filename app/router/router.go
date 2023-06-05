@@ -1,7 +1,6 @@
 package router
 
 import (
-	"io/ioutil"
 	"ldap-rest/app/controllers/ctrl_admin"
 	"ldap-rest/docs"
 
@@ -9,14 +8,8 @@ import (
 )
 
 func SetupRouter() *gin.Engine {
-	// Disable Console Color
-	// gin.DisableConsoleColor()
 	r := gin.Default()
 
-	data, _ := ioutil.ReadFile("docs/swagger.json")
-	ioutil.WriteFile("static/swagger.json", data, 0777)
-
-	println(string(data))
 	r.Static("/static", "./static")
 	r.LoadHTMLGlob("templates/*.html")
 	r.GET("/doc/*any", func(ctx *gin.Context) { // Stoplight Documentation

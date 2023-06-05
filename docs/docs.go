@@ -34,29 +34,7 @@ const docTemplate = `{
                         "schema": {
                             "type": ""
                         }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/ctrl_admin.FooBarResponse"
-                        }
                     }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "ctrl_admin.FooBarResponse": {
-            "type": "object",
-            "properties": {
-                "bar": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                },
-                "foo": {
-                    "type": "string"
                 }
             }
         }

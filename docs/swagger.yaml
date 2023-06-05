@@ -1,13 +1,3 @@
-definitions:
-  ctrl_admin.FooBarResponse:
-    properties:
-      bar:
-        items:
-          type: integer
-        type: array
-      foo:
-        type: string
-    type: object
 info:
   contact: {}
 paths:
@@ -22,10 +12,6 @@ paths:
           description: OK
           schema:
             type: ""
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ctrl_admin.FooBarResponse'
       summary: Get Users
       tags:
       - Get Users
