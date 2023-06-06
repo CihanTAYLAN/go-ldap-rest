@@ -6,62 +6,69 @@ definitions:
         items:
           type: string
         type: array
-      search_base:
+      searchBase:
         type: string
-      search_filter:
+      searchFilter:
         type: string
-    required:
-    - search_base
-    - search_filter
     type: object
   controllers.FindResponse:
     properties:
       data:
-        properties:
-          session_token:
-            type: string
-        required:
-        - session_token
-        type: object
+        items:
+          $ref: '#/definitions/ldap_connector.LdapEntry'
+        type: array
       message:
         type: string
       status:
         type: integer
-    required:
-    - data
-    - message
-    - status
     type: object
   controllers.LoginRequest:
     properties:
-      bind_dn:
+      bindDN:
         type: string
-      bind_password:
+      bindPassword:
         type: string
-      ldap_url:
+      ldapURL:
         type: string
-    required:
-    - bind_dn
-    - bind_password
-    - ldap_url
     type: object
   controllers.LoginResponse:
     properties:
       data:
         properties:
-          session_token:
+          sessionToken:
             type: string
-        required:
-        - session_token
         type: object
       message:
         type: string
       status:
         type: integer
-    required:
-    - data
-    - message
-    - status
+    type: object
+  ldap_connector.LdapEntry:
+    properties:
+      attributes:
+        items:
+          $ref: '#/definitions/ldap_connector.LdapEntryAttribute'
+        type: array
+      dn:
+        type: string
+    type: object
+  ldap_connector.LdapEntryAttribute:
+    properties:
+      byteValues:
+        description: ByteValues contain the raw values of the attribute
+        items:
+          items:
+            type: integer
+          type: array
+        type: array
+      name:
+        description: Name is the name of the attribute
+        type: string
+      values:
+        description: Values contain the string values of the attribute
+        items:
+          type: string
+        type: array
     type: object
 host: localhost:8088
 info:
@@ -78,7 +85,7 @@ paths:
       consumes:
       - application/json
       description: 'EG;<br>ByRG81IDDPQFY9+9dSaWFKIA3Xp1vZhrpCjCg4XXR7gnNxLM9SvgTK1PFKMrsdE5s4mNRSIo8qJhzeZAdMi5zQfAhJOV8FDdmEs=<br>SearchBase:
-        "dc=example,dc=com"<br>SearchFilter: "(objectClass=person)"'
+        dc=example,dc=com<br>SearchFilter: (objectClass=person)'
       operationId: Find
       parameters:
       - description: Your Auth Token

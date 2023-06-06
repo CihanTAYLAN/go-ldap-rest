@@ -9,16 +9,14 @@ import (
 )
 
 type FindRequest struct {
-	SearchBase   string   `json:"search_base" bson:"search_base" binding:"required"`
-	SearchFilter string   `json:"search_filter" bson:"search_filter" binding:"required"`
-	Attributes   []string `json:"attributes" bson:"attributes"`
+	SearchBase   string
+	SearchFilter string
+	Attributes   []string
 }
 
 type FindResponse struct {
 	helpers.ResponseType
-	Data struct {
-		SessionToken string `json:"session_token" bson:"session_token" binding:"required"`
-	}
+	Data []*ldap_connector.LdapEntry
 }
 
 // @Tags Ldap
@@ -65,9 +63,7 @@ func Find(c *gin.Context) {
 			ldapCon.Close()
 			return
 		}
-		helpers.CreateResponse(c, http.StatusOK, "OK", gin.H{
-			"response": findRes,
-		})
+		helpers.CreateResponse(c, http.StatusOK, "OK", findRes)
 		ldapCon.Close()
 		return
 	}

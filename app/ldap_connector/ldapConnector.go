@@ -5,9 +5,9 @@ import (
 )
 
 type ConnectParams struct {
-	LdapURL      string `json:"ldap_url" bson:"ldap_url" binding:"required"`
-	BindDN       string `json:"bind_dn" bson:"bind_dn" binding:"required"`
-	BindPassword string `json:"bind_password" bson:"bind_password" binding:"required"`
+	LdapURL      string
+	BindDN       string
+	BindPassword string
 }
 
 func Connect(ConnectParams ConnectParams) (*ldap.Conn, error) {
@@ -23,10 +23,10 @@ func Connect(ConnectParams ConnectParams) (*ldap.Conn, error) {
 }
 
 type FindParams struct {
-	Conn         *ldap.Conn `json:"conn" bson:"conn" binding:"required"`
-	SearchBase   string     `json:"search_base" bson:"search_base" binding:"required"`
-	SearchFilter string     `json:"search_filter" bson:"search_filter" binding:"required"`
-	Attributes   []string   `json:"attributes" bson:"attributes" default:"[\"*\"]"`
+	Conn         *ldap.Conn
+	SearchBase   string
+	SearchFilter string
+	Attributes   []string
 }
 
 func Find(
@@ -52,5 +52,18 @@ func Find(
 		return nil, err
 	}
 	return sr.Entries, nil
+}
 
+type LdapEntry struct {
+	DN         string
+	Attributes []*LdapEntryAttribute
+}
+
+type LdapEntryAttribute struct {
+	// Name is the name of the attribute
+	Name string
+	// Values contain the string values of the attribute
+	Values []string
+	// ByteValues contain the raw values of the attribute
+	ByteValues [][]byte
 }

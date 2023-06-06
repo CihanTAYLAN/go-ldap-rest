@@ -58,9 +58,9 @@ func Decrypt(text, MySecret string) (string, error) {
 }
 
 type CreateSessionParams struct {
-	LdapURL      string `json:"ldap_url" bson:"ldap_url" binding:"required"`
-	BindDN       string `json:"bind_dn" bson:"bind_dn" binding:"required"`
-	BindPassword string `json:"bind_password" bson:"bind_password" binding:"required"`
+	LdapURL      string
+	BindDN       string
+	BindPassword string
 }
 
 func CreateSession(Params *CreateSessionParams) (string, error) {
