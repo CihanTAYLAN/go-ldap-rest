@@ -1,18 +1,50 @@
+basePath: /api/v1
+definitions:
+  ldap_connector.ConnectParams:
+    properties:
+      bindDN:
+        type: string
+      bindPassword:
+        type: string
+      ldapURL:
+        type: string
+    required:
+    - bindDN
+    - bindPassword
+    - ldapURL
+    type: object
+host: localhost:8088
 info:
-  contact: {}
+  contact:
+    email: cihantaylan@cihantaylan.com
+    name: API Support
+    url: https://cihantaylan.com
+  description: This is a go ldap rest API Documentation.
+  title: Go Ldap Rest API
+  version: "1.0"
 paths:
-  /admin/users:
-    get:
+  /ldap/login:
+    post:
       consumes:
       - application/json
+      description: 'EG;<br>LdapURL: ldap://ldap.forumsys.com:389<br>BindDN: cn=read-only-admin,dc=example,dc=com<br>BindPassword:
+        password,'
+      operationId: Login
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/ldap_connector.ConnectParams'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            type: ""
-      summary: Get Users
+            $ref: '#/definitions/ldap_connector.ConnectParams'
+      summary: Login
       tags:
-      - Get Users
+      - Ldap
 swagger: "2.0"

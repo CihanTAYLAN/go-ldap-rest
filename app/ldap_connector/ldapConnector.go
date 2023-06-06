@@ -6,20 +6,22 @@ import (
 	"github.com/go-ldap/ldap/v3"
 )
 
-// Host : ldap://ldap.forumsys.com
-// User : cn=read-only-admin,dc=example,dc=com
-// Pass : password
+type ConnectParams struct {
+	LdapURL      string `json:"ldapURL" bson:"searchBase" binding:"required"`
+	BindDN       string `json:"bindDN" bson:"searchFilter" binding:"required"`
+	BindPassword string `json:"bindPassword" bson:"attributes" binding:"required"`
+}
 
-func Connect(ldapURL string, bindDN string, bindPassword string) *ldap.Conn {
-	l, err := ldap.DialURL(ldapURL)
+func Connect(ConnectParams ConnectParams) (*ldap.Conn, error) {
+	l, err := ldap.DialURL(ConnectParams.LdapURL)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	err = l.Bind(bindDN, bindPassword)
+	err = l.Bind(ConnectParams.BindDN, ConnectParams.BindPassword)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	return l
+	return l, nil
 }
 
 type FindParams struct {

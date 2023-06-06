@@ -1,10 +1,12 @@
 package router
 
 import (
-	"ldap-rest/app/controllers/ctrl_admin"
+	"ldap-rest/app/controllers"
 	"ldap-rest/docs"
 
-	"github.com/gin-gonic/gin"
+	gin "github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func SetupRouter() *gin.Engine {
@@ -16,17 +18,15 @@ func SetupRouter() *gin.Engine {
 		ctx.HTML(200, "stoplight.html", gin.H{})
 	})
 
-	docs.SwaggerInfo.Title = "Go Ldap Rest API"
-	docs.SwaggerInfo.Host = "localhost:8088"
-	docs.SwaggerInfo.Version = "v1"
-	docs.SwaggerInfo.BasePath = "/api/v1"
 	v1 := r.Group("/api/v1")
 	{
-		admin := v1.Group("/admin")
+		ldap := v1.Group("/ldap")
 		{
-			admin.GET("/users", ctrl_admin.Find)
+			ldap.POST("login", controllers.Login)
+			ldap.GET("find", controllers.Login)
 		}
 	}
-
+	println(docs.SwaggerInfo.Title)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	return r
 }

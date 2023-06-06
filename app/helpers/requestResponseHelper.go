@@ -11,11 +11,3 @@ func CreateResponse(c *gin.Context, status int, message string, data interface{}
 		"data":    data,
 	})
 }
-
-type InternalServerError struct {
-}
-
-// type InternalServerError struct {
-// 	Foo string `json:"foo"`
-// 	Bar []int  `json:"bar"`
-// }

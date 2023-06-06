@@ -10,14 +10,19 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "contact": {
+            "name": "API Support",
+            "url": "https://cihantaylan.com",
+            "email": "cihantaylan@cihantaylan.com"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/users": {
-            "get": {
+        "/ldap/login": {
+            "post": {
+                "description": "EG;\u003cbr\u003eLdapURL: ldap://ldap.forumsys.com:389\u003cbr\u003eBindDN: cn=read-only-admin,dc=example,dc=com\u003cbr\u003eBindPassword: password,",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,16 +30,49 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Get Users"
+                    "Ldap"
                 ],
-                "summary": "Get Users",
+                "summary": "Login",
+                "operationId": "Login",
+                "parameters": [
+                    {
+                        "description": "Request Body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ldap_connector.ConnectParams"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": ""
+                            "$ref": "#/definitions/ldap_connector.ConnectParams"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ldap_connector.ConnectParams": {
+            "type": "object",
+            "required": [
+                "bindDN",
+                "bindPassword",
+                "ldapURL"
+            ],
+            "properties": {
+                "bindDN": {
+                    "type": "string"
+                },
+                "bindPassword": {
+                    "type": "string"
+                },
+                "ldapURL": {
+                    "type": "string"
                 }
             }
         }
@@ -43,12 +81,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "",
-	Host:             "",
-	BasePath:         "",
+	Version:          "1.0",
+	Host:             "localhost:8088",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "",
-	Description:      "",
+	Title:            "Go Ldap Rest API",
+	Description:      "This is a go ldap rest API Documentation.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
