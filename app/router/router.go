@@ -18,12 +18,13 @@ func SetupRouter() *gin.Engine {
 		ctx.HTML(200, "stoplight.html", gin.H{})
 	})
 
+	r.GET("/", controllers.Index)
 	v1 := r.Group("/api/v1")
 	{
 		ldap := v1.Group("/ldap")
 		{
 			ldap.POST("login", controllers.Login)
-			ldap.GET("find", controllers.Login)
+			ldap.POST("find", controllers.Find)
 		}
 	}
 	println(docs.SwaggerInfo.Title)

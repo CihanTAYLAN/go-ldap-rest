@@ -1,17 +1,67 @@
 basePath: /api/v1
 definitions:
-  ldap_connector.ConnectParams:
+  controllers.FindRequest:
     properties:
-      bindDN:
+      attributes:
+        items:
+          type: string
+        type: array
+      search_base:
         type: string
-      bindPassword:
-        type: string
-      ldapURL:
+      search_filter:
         type: string
     required:
-    - bindDN
-    - bindPassword
-    - ldapURL
+    - search_base
+    - search_filter
+    type: object
+  controllers.FindResponse:
+    properties:
+      data:
+        properties:
+          session_token:
+            type: string
+        required:
+        - session_token
+        type: object
+      message:
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - message
+    - status
+    type: object
+  controllers.LoginRequest:
+    properties:
+      bind_dn:
+        type: string
+      bind_password:
+        type: string
+      ldap_url:
+        type: string
+    required:
+    - bind_dn
+    - bind_password
+    - ldap_url
+    type: object
+  controllers.LoginResponse:
+    properties:
+      data:
+        properties:
+          session_token:
+            type: string
+        required:
+        - session_token
+        type: object
+      message:
+        type: string
+      status:
+        type: integer
+    required:
+    - data
+    - message
+    - status
     type: object
 host: localhost:8088
 info:
@@ -23,12 +73,41 @@ info:
   title: Go Ldap Rest API
   version: "1.0"
 paths:
+  /ldap/find:
+    post:
+      consumes:
+      - application/json
+      description: 'EG;<br>ByRG81IDDPQFY9+9dSaWFKIA3Xp1vZhrpCjCg4XXR7gnNxLM9SvgTK1PFKMrsdE5s4mNRSIo8qJhzeZAdMi5zQfAhJOV8FDdmEs=<br>SearchBase:
+        "dc=example,dc=com"<br>SearchFilter: "(objectClass=person)"'
+      operationId: Find
+      parameters:
+      - description: Your Auth Token
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.FindRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.FindResponse'
+      summary: Find
+      tags:
+      - Ldap
   /ldap/login:
     post:
       consumes:
       - application/json
       description: 'EG;<br>LdapURL: ldap://ldap.forumsys.com:389<br>BindDN: cn=read-only-admin,dc=example,dc=com<br>BindPassword:
-        password,'
+        password'
       operationId: Login
       parameters:
       - description: Request Body
@@ -36,14 +115,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/ldap_connector.ConnectParams'
+          $ref: '#/definitions/controllers.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/ldap_connector.ConnectParams'
+            $ref: '#/definitions/controllers.LoginResponse'
       summary: Login
       tags:
       - Ldap

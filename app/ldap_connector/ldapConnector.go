@@ -1,15 +1,13 @@
 package ldap_connector
 
 import (
-	"log"
-
 	"github.com/go-ldap/ldap/v3"
 )
 
 type ConnectParams struct {
-	LdapURL      string `json:"ldapURL" bson:"searchBase" binding:"required"`
-	BindDN       string `json:"bindDN" bson:"searchFilter" binding:"required"`
-	BindPassword string `json:"bindPassword" bson:"attributes" binding:"required"`
+	LdapURL      string `json:"ldap_url" bson:"ldap_url" binding:"required"`
+	BindDN       string `json:"bind_dn" bson:"bind_dn" binding:"required"`
+	BindPassword string `json:"bind_password" bson:"bind_password" binding:"required"`
 }
 
 func Connect(ConnectParams ConnectParams) (*ldap.Conn, error) {
@@ -26,14 +24,14 @@ func Connect(ConnectParams ConnectParams) (*ldap.Conn, error) {
 
 type FindParams struct {
 	Conn         *ldap.Conn `json:"conn" bson:"conn" binding:"required"`
-	SearchBase   string     `json:"searchBase" bson:"searchBase" binding:"required"`
-	SearchFilter string     `json:"searchFilter" bson:"searchFilter" binding:"required"`
+	SearchBase   string     `json:"search_base" bson:"search_base" binding:"required"`
+	SearchFilter string     `json:"search_filter" bson:"search_filter" binding:"required"`
 	Attributes   []string   `json:"attributes" bson:"attributes" default:"[\"*\"]"`
 }
 
 func Find(
 	FindParams FindParams,
-) []*ldap.Entry {
+) ([]*ldap.Entry, error) {
 	if FindParams.Attributes == nil {
 		FindParams.Attributes = []string{"*"}
 	}
@@ -51,8 +49,8 @@ func Find(
 	)
 	sr, err := FindParams.Conn.SearchWithPaging(searchRequest, 4)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
-	return sr.Entries
+	return sr.Entries, nil
 
 }

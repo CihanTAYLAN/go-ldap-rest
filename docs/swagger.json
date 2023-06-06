@@ -13,9 +13,51 @@
     "host": "localhost:8088",
     "basePath": "/api/v1",
     "paths": {
+        "/ldap/find": {
+            "post": {
+                "description": "EG;\u003cbr\u003eByRG81IDDPQFY9+9dSaWFKIA3Xp1vZhrpCjCg4XXR7gnNxLM9SvgTK1PFKMrsdE5s4mNRSIo8qJhzeZAdMi5zQfAhJOV8FDdmEs=\u003cbr\u003eSearchBase: \"dc=example,dc=com\"\u003cbr\u003eSearchFilter: \"(objectClass=person)\"",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ldap"
+                ],
+                "summary": "Find",
+                "operationId": "Find",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Your Auth Token",
+                        "name": "Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Request Body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.FindRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.FindResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/ldap/login": {
             "post": {
-                "description": "EG;\u003cbr\u003eLdapURL: ldap://ldap.forumsys.com:389\u003cbr\u003eBindDN: cn=read-only-admin,dc=example,dc=com\u003cbr\u003eBindPassword: password,",
+                "description": "EG;\u003cbr\u003eLdapURL: ldap://ldap.forumsys.com:389\u003cbr\u003eBindDN: cn=read-only-admin,dc=example,dc=com\u003cbr\u003eBindPassword: password",
                 "consumes": [
                     "application/json"
                 ],
@@ -34,7 +76,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ldap_connector.ConnectParams"
+                            "$ref": "#/definitions/controllers.LoginRequest"
                         }
                     }
                 ],
@@ -42,7 +84,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ldap_connector.ConnectParams"
+                            "$ref": "#/definitions/controllers.LoginResponse"
                         }
                     }
                 }
@@ -50,22 +92,97 @@
         }
     },
     "definitions": {
-        "ldap_connector.ConnectParams": {
+        "controllers.FindRequest": {
             "type": "object",
             "required": [
-                "bindDN",
-                "bindPassword",
-                "ldapURL"
+                "search_base",
+                "search_filter"
             ],
             "properties": {
-                "bindDN": {
+                "attributes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "search_base": {
                     "type": "string"
                 },
-                "bindPassword": {
+                "search_filter": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.FindResponse": {
+            "type": "object",
+            "required": [
+                "data",
+                "message",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "required": [
+                        "session_token"
+                    ],
+                    "properties": {
+                        "session_token": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "message": {
                     "type": "string"
                 },
-                "ldapURL": {
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controllers.LoginRequest": {
+            "type": "object",
+            "required": [
+                "bind_dn",
+                "bind_password",
+                "ldap_url"
+            ],
+            "properties": {
+                "bind_dn": {
                     "type": "string"
+                },
+                "bind_password": {
+                    "type": "string"
+                },
+                "ldap_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.LoginResponse": {
+            "type": "object",
+            "required": [
+                "data",
+                "message",
+                "status"
+            ],
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "required": [
+                        "session_token"
+                    ],
+                    "properties": {
+                        "session_token": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
                 }
             }
         }

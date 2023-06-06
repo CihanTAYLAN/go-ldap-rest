@@ -8,17 +8,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type LoginRequest struct {
+	ldap_connector.ConnectParams
+}
+
+type LoginResponse struct {
+	helpers.ResponseType
+	Data struct {
+		SessionToken string `json:"session_token" bson:"session_token" binding:"required"`
+	}
+}
+
 // @Tags Ldap
 // @Summary Login
 // @Description EG;<br>LdapURL: ldap://ldap.forumsys.com:389<br>BindDN: cn=read-only-admin,dc=example,dc=com<br>BindPassword: password
 // @ID Login
 // @Accept json
 // @Produce json
-// @Param request body ldap_connector.ConnectParams true "Request Body"
-// @Success 200 {object} ldap_connector.ConnectParams
+// @Param request body LoginRequest true "Request Body"
+// @Success 200 {object} LoginResponse
 // @Router /ldap/login [post]
 func Login(c *gin.Context) {
-	var request ldap_connector.ConnectParams
+	var request LoginRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -29,7 +40,9 @@ func Login(c *gin.Context) {
 		BindDN:       request.BindDN,
 		BindPassword: request.BindPassword,
 	})
-	ldapCon.Close()
+	if ldapCon != nil {
+		ldapCon.Close()
+	}
 	if err == nil {
 		hash, err := helpers.CreateSession(&helpers.CreateSessionParams{
 			LdapURL:      request.LdapURL,
