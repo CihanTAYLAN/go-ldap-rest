@@ -89,6 +89,48 @@
                     }
                 }
             }
+        },
+        "/ldap/user-auth": {
+            "post": {
+                "description": "EG;\u003cbr\u003eByRG81IDDPQFY9+9dSaWFKIA3Xp1vZhrpCjCg4XXR7gnNxLM9SvgTK1PFKMrsdE5s4mNRSIo8qJhzeZAdMi5zQfAhJOV8FDdmEs=\u003cbr\u003eusername: cn=read-only-admin,dc=example,dc=com\u003cbr\u003epassword: password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Ldap"
+                ],
+                "summary": "UserAuth",
+                "operationId": "UserAuth",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Your Auth Token",
+                        "name": "Token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Request Body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.UserAuthRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.UserAuthResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -150,6 +192,35 @@
                             "type": "string"
                         }
                     }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controllers.UserAuthRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "userDn"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "userDn": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.UserAuthResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object"
                 },
                 "message": {
                     "type": "string"

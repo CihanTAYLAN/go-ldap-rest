@@ -43,6 +43,25 @@ definitions:
       status:
         type: integer
     type: object
+  controllers.UserAuthRequest:
+    properties:
+      password:
+        type: string
+      userDn:
+        type: string
+    required:
+    - password
+    - userDn
+    type: object
+  controllers.UserAuthResponse:
+    properties:
+      data:
+        type: object
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
   ldap_connector.LdapEntry:
     properties:
       attributes:
@@ -131,6 +150,35 @@ paths:
           schema:
             $ref: '#/definitions/controllers.LoginResponse'
       summary: Login
+      tags:
+      - Ldap
+  /ldap/user-auth:
+    post:
+      consumes:
+      - application/json
+      description: 'EG;<br>ByRG81IDDPQFY9+9dSaWFKIA3Xp1vZhrpCjCg4XXR7gnNxLM9SvgTK1PFKMrsdE5s4mNRSIo8qJhzeZAdMi5zQfAhJOV8FDdmEs=<br>username:
+        cn=read-only-admin,dc=example,dc=com<br>password: password'
+      operationId: UserAuth
+      parameters:
+      - description: Your Auth Token
+        in: header
+        name: Token
+        required: true
+        type: string
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.UserAuthRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.UserAuthResponse'
+      summary: UserAuth
       tags:
       - Ldap
 swagger: "2.0"

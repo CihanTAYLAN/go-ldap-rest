@@ -25,6 +25,7 @@ func SetupRouter() *gin.Engine {
 		{
 			ldap.POST("login", controllers.Login)
 			ldap.POST("find", controllers.Find)
+			ldap.POST("user-auth", controllers.UserAuth)
 		}
 	}
 	println(docs.SwaggerInfo.Title)
