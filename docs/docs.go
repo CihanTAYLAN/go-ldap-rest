@@ -20,7 +20,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/ldap/find": {
+        "/api/v1/ldap/find": {
             "post": {
                 "description": "EG;\u003cbr\u003eByRG81IDDPQFY9+9dSaWFKIA3Xp1vZhrpCjCg4XXR7gnNxLM9SvgTK1PFKMrsdE5s4mNRSIo8qJhzeZAdMi5zQfAhJOV8FDdmEs=\u003cbr\u003eSearchBase: dc=example,dc=com\u003cbr\u003eSearchFilter: (objectClass=person)",
                 "consumes": [
@@ -284,7 +284,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8088",
-	BasePath:         "/api/v1",
+	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Go Ldap Rest API",
 	Description:      "This is a go ldap rest API Documentation.",

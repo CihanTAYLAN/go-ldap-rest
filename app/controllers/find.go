@@ -28,7 +28,7 @@ type FindResponse struct {
 // @Param Token header string true "Your Auth Token"
 // @Param request body FindRequest true "Request Body"
 // @Success 200 {object} FindResponse
-// @Router /ldap/find [post]
+// @Router /api/v1/ldap/find [post]
 func Find(c *gin.Context) {
 	var request FindRequest
 	if err := c.ShouldBindJSON(&request); err != nil {

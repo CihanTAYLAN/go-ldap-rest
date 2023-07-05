@@ -1,2 +1,2 @@
 swag init
-gin -p 8088 -a 8089 -i --all run main.go
+gin -p 9088 -a 9089 -i --all run main.go

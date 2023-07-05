@@ -1,4 +1,4 @@
-basePath: /api/v1
+basePath: /
 definitions:
   controllers.FindRequest:
     properties:
@@ -99,7 +99,7 @@ info:
   title: Go Ldap Rest API
   version: "1.0"
 paths:
-  /ldap/find:
+  /api/v1/ldap/find:
     post:
       consumes:
       - application/json
