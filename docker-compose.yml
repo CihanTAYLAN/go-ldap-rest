@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: dev
+    environment:
+      API_SERVER_ADDR: ":3000"
+    ports:
+    - "8082:8080"
+    volumes:
+      - .:/opt/app/api
