@@ -29,7 +29,7 @@ type UserAuthResponse struct {
 // @Param Token header string true "Your Auth Token"
 // @Param request body UserAuthRequest true "Request Body"
 // @Success 200 {object} UserAuthResponse
-// @Router /ldap/user-auth [post]
+// @Router /api/v1/ldap/user-auth [post]
 func UserAuth(c *gin.Context) {
 	var request UserAuthRequest
 	if err := c.ShouldBindJSON(&request); err != nil {

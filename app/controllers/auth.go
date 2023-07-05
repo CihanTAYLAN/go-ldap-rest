@@ -27,7 +27,7 @@ type LoginResponse struct {
 // @Produce json
 // @Param request body LoginRequest true "Request Body"
 // @Success 200 {object} LoginResponse
-// @Router /ldap/login [post]
+// @Router /api/v1/ldap/login [post]
 func Login(c *gin.Context) {
 	var request LoginRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
