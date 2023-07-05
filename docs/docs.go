@@ -62,7 +62,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/ldap/login": {
+        "/api/v1/ldap/login": {
             "post": {
                 "description": "EG;\u003cbr\u003eLdapURL: ldap://ldap.forumsys.com:389\u003cbr\u003eBindDN: cn=read-only-admin,dc=example,dc=com\u003cbr\u003eBindPassword: password",
                 "consumes": [
@@ -97,7 +97,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/ldap/user-auth": {
+        "/api/v1/ldap/user-auth": {
             "post": {
                 "description": "EG;\u003cbr\u003eByRG81IDDPQFY9+9dSaWFKIA3Xp1vZhrpCjCg4XXR7gnNxLM9SvgTK1PFKMrsdE5s4mNRSIo8qJhzeZAdMi5zQfAhJOV8FDdmEs=\u003cbr\u003eusername: cn=read-only-admin,dc=example,dc=com\u003cbr\u003epassword: password",
                 "consumes": [

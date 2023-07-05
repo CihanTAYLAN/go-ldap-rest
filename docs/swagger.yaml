@@ -128,7 +128,7 @@ paths:
       summary: Find
       tags:
       - Ldap
-  /ldap/login:
+  /api/v1/ldap/login:
     post:
       consumes:
       - application/json
@@ -152,7 +152,7 @@ paths:
       summary: Login
       tags:
       - Ldap
-  /ldap/user-auth:
+  /api/v1/ldap/user-auth:
     post:
       consumes:
       - application/json
