@@ -15,7 +15,7 @@ type LoginRequest struct {
 type LoginResponse struct {
 	helpers.ResponseType
 	Data struct {
-		SessionToken string
+		SessionToken string `json:"session_token"`
 	}
 }
 

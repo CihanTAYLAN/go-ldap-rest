@@ -195,7 +195,7 @@ const docTemplate = `{
                 "data": {
                     "type": "object",
                     "properties": {
-                        "sessionToken": {
+                        "session_token": {
                             "type": "string"
                         }
                     }
@@ -283,7 +283,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8088",
+	Host:             "localhost:8082",
 	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Go Ldap Rest API",

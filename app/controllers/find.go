@@ -35,40 +35,43 @@ func Find(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	credentials, err := helpers.ReadSession(c.Request.Header["Token"][0])
-	if err != nil {
-		helpers.CreateResponse(c, http.StatusUnauthorized, "Unauthorized", gin.H{
-			"response": err,
-		})
-		return
-	}
-
-	ldapCon, err := ldap_connector.Connect(ldap_connector.ConnectParams{
-		LdapURL:      credentials.LdapURL,
-		BindDN:       credentials.BindDN,
-		BindPassword: credentials.BindPassword,
-	})
-
-	if err == nil {
-		findRes, err := ldap_connector.Find(ldap_connector.FindParams{
-			Conn:         ldapCon,
-			SearchBase:   request.SearchBase,
-			SearchFilter: request.SearchFilter,
-			Attributes:   request.Attributes,
-		})
+	if len(c.Request.Header["Token"]) > 0 {
+		credentials, err := helpers.ReadSession(c.Request.Header["Token"][0])
 		if err != nil {
-			helpers.CreateResponse(c, http.StatusBadRequest, "Bad Request", gin.H{
+			helpers.CreateResponse(c, http.StatusUnauthorized, "Unauthorized", gin.H{
 				"response": err,
 			})
+			return
+		}
+
+		ldapCon, err := ldap_connector.Connect(ldap_connector.ConnectParams{
+			LdapURL:      credentials.LdapURL,
+			BindDN:       credentials.BindDN,
+			BindPassword: credentials.BindPassword,
+		})
+
+		if err == nil {
+			findRes, err := ldap_connector.Find(ldap_connector.FindParams{
+				Conn:         ldapCon,
+				SearchBase:   request.SearchBase,
+				SearchFilter: request.SearchFilter,
+				Attributes:   request.Attributes,
+			})
+			if err != nil {
+				helpers.CreateResponse(c, http.StatusBadRequest, "Bad Request", gin.H{
+					"response": err,
+				})
+				ldapCon.Close()
+				return
+			}
+			helpers.CreateResponse(c, http.StatusOK, "OK", findRes)
 			ldapCon.Close()
 			return
 		}
-		helpers.CreateResponse(c, http.StatusOK, "OK", findRes)
-		ldapCon.Close()
-		return
+		helpers.CreateResponse(c, http.StatusUnauthorized, "Unauthorized", gin.H{
+			"response": err,
+		})
 	}
-	helpers.CreateResponse(c, http.StatusUnauthorized, "Unauthorized", gin.H{
-		"response": err,
-	})
+
 	return
 }

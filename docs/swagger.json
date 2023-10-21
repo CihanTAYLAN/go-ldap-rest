@@ -10,7 +10,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8088",
+    "host": "localhost:8082",
     "basePath": "/",
     "paths": {
         "/api/v1/ldap/find": {
@@ -188,7 +188,7 @@
                 "data": {
                     "type": "object",
                     "properties": {
-                        "sessionToken": {
+                        "session_token": {
                             "type": "string"
                         }
                     }

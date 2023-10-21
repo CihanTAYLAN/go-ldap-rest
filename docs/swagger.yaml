@@ -35,7 +35,7 @@ definitions:
     properties:
       data:
         properties:
-          sessionToken:
+          session_token:
             type: string
         type: object
       message:
@@ -89,7 +89,7 @@ definitions:
           type: string
         type: array
     type: object
-host: localhost:8088
+host: localhost:8082
 info:
   contact:
     email: cihantaylan@cihantaylan.com
