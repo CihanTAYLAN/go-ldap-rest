@@ -1,4 +1,4 @@
-
+# Binaries for programs and plugins
 *.exe
 *.exe~
 *.dll
@@ -11,9 +11,62 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
+# Dependency directories
+vendor/
+node_modules/
 
 # Go workspace file
 go.work
+go.work.sum
+
+# Environment files
+.env
+*.env
+*.env.local
+*.env.development
+*.env.production
+
+# IDE and editor directories
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Logs
+*.log
+
+# Build output
+build/
+dist/
+out/
+bin/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Compiled binary artifacts
 gin-bin
+
+# Profiling and debugging files
+*.prof
+*.pprof
+
+# Docker and container-related
+.dockerignore
+docker-compose.override.yml
+
+# Backup files
+*.bak
+*.gzip
+*.zip
+
+# Project-specific ignores
+# Add any additional project-specific ignore patterns here
